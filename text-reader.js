@@ -66,6 +66,10 @@ class TextReader {
 
         return {lines, rest}
     }
+
+    static open(filename, origin, blocksize) {
+        return new TextReader(filename, origin, blocksize);
+    }
 }
 
 if (require.main === module) {

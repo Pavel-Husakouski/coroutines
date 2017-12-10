@@ -11,7 +11,7 @@ const time = require('./time');
 const {TextReader} = require('./text-reader');
 
 function* follow(filename) {
-    let file = new TextReader(filename, TextReader.filesize(filename));
+    let file = TextReader.open(filename, TextReader.filesize(filename));
 
     while (true) {
         let line = file.readline();
