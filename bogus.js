@@ -14,7 +14,7 @@ function* countdown(n) {
             n -= 1;
         }
     }
-};
+}
 
 if (require.main === module) {
     // The holy grail countdown

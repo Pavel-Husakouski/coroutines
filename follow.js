@@ -11,7 +11,7 @@ const time = require('./time');
 const {TextReader} = require('./text-reader');
 
 function* follow(filename) {
-    let file = TextReader.open(filename, TextReader.filesize(filename));
+    const file = TextReader.open(filename, TextReader.filesize(filename));
 
     while (true) {
         let line = file.readline();
@@ -25,7 +25,9 @@ function* follow(filename) {
 }
 
 if (require.main === module) {
-    for (let x of follow("access-log")) {
+    const filename = "access-log";
+
+    for (let x of follow(filename)) {
         console.log(x);
     }
 } else {
