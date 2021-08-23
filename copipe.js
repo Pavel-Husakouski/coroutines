@@ -25,5 +25,5 @@ if (require.main === module) {
 
     follow(reader, grep('python', printer()));
 } else {
-    module.exports = {follow}
+    module.exports = {grep}
 }
