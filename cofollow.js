@@ -23,7 +23,7 @@ function follow(reader, target) {
 
 const printer = coroutine(function* () {
     while (true) {
-        let line = yield;
+        const line = yield;
 
         console.log(line);
     }
@@ -34,4 +34,6 @@ if (require.main === module) {
     const reader = TextReader.open(filename, TextReader.filesize(filename));
 
     follow(reader, printer());
+} else {
+    module.exports = {follow, printer}
 }
