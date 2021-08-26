@@ -66,4 +66,6 @@ if (require.main === module) {
     sched.new(foo());
     sched.new(bar());
     sched.mainloop();
+} else {
+    module.exports = {Scheduler};
 }
