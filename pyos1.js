@@ -40,4 +40,6 @@ if (require.main === module) {
     t1.run();
     console.log('Resuming foo()');
     t1.run();
+} else {
+    module.exports = {Task};
 }
