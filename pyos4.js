@@ -22,7 +22,6 @@ class Scheduler {
         this.taskmap = new Map();
     }
 
-
     new(target) {
         const newtask = new Task(target);
         this.taskmap.set(newtask.tid, newtask);
@@ -103,5 +102,5 @@ if (require.main === module) {
     sched.new(bar());
     sched.mainloop();
 } else {
-    module.exports = {Scheduler};
+    module.exports = {Scheduler, SystemCall, GetTid};
 }
