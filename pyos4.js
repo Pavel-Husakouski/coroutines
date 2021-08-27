@@ -1,7 +1,7 @@
 // ------------------------------------------------------------
-// pyos3.py  -  The Python Operating System
+    // pyos4.py  -  The Python Operating System
 //
-// Step 3: Added handling for task termination
+// Step 4: Introduce the idea of a "System Call"
 // ------------------------------------------------------------
 
 // ------------------------------------------------------------
@@ -42,8 +42,15 @@ class Scheduler {
     mainloop() {
         while (this.taskmap.size) {
             const task = this.ready.shift();
-            const result = task.run();
-            if(result.done) {
+            const {done, value: result} = task.run();
+
+            if(result instanceof SystemCall) {
+                result.task = task;
+                result.shed = this;
+                result.handle();
+                continue;
+            }
+            if(done) {
                 this.exit(task);
                 continue;
             }
@@ -52,22 +59,40 @@ class Scheduler {
     }
 }
 
+/// ------------------------------------------------------------
+//                   === System Calls ===
 // ------------------------------------------------------------
-//                      === Example ===
+
+class SystemCall {
+    handle() {
+    }
+}
+
+class GetTid extends SystemCall {
+    handle() {
+        this.task.sendval = this.task.tid;
+        this.shed.schedule(this.task)
+    }
+}
+
+// ------------------------------------------------------------
+    //                      === Example ===
 // ------------------------------------------------------------
 if (require.main === module) {
 
-    // Two tasks
+// Two tasks
     function* foo() {
         for (let i = 0; i < 5; i++) {
-            console.log(`I'm foo`);
+            const mytid = yield new GetTid();
+            console.log(`I'm foo`, mytid);
             yield;
         }
     }
 
     function* bar() {
         for (let i = 0; i < 10; i++) {
-            console.log(`I'm bar`);
+            const mytid = yield new GetTid();
+            console.log(`I'm bar`, mytid);
             yield;
         }
     }
